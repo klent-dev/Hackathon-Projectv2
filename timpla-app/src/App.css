@@ -111,6 +111,24 @@
   margin-top: 2rem;
 }
 
+.search-view {
+  display: flex;
+  flex-direction: column;
+}
+
+.selected-route-banner {
+  border: 1px solid var(--accent-color);
+  background: color-mix(in srgb, var(--accent-color) 10%, transparent);
+  border-radius: var(--border-radius);
+  padding: 0.9rem 1rem;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.selected-route-banner p {
+  margin: 0;
+}
+
 .loader {
   text-align: center;
   padding: 3rem 1rem;

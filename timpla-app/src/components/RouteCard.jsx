@@ -11,7 +11,7 @@ const ICONS = {
   "habal-habal": "🛵",
 };
 
-function RouteCard({ route, isCheapest }) {
+function RouteCard({ route, isCheapest, isSelected, onTakeRoute }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const { legs, totalFare, totalTime } = route;
@@ -25,6 +25,8 @@ function RouteCard({ route, isCheapest }) {
   return (
     <div
       className={`route-card ${isCheapest ? "cheapest" : ""} ${
+        isSelected ? "selected" : ""
+      } ${
         isExpanded ? "expanded" : ""
       }`}
       onClick={() => setIsExpanded(!isExpanded)}
@@ -40,6 +42,16 @@ function RouteCard({ route, isCheapest }) {
             {totalFare}
           </div>
           {isCheapest && <div className="cheapest-badge">BEST DEAL</div>}
+          <button
+            type="button"
+            className="take-route-btn"
+            onClick={(event) => {
+              event.stopPropagation();
+              onTakeRoute(route.id);
+            }}
+          >
+            {isSelected ? "Route selected" : "Take this route"}
+          </button>
         </div>
       </div>
       {isExpanded && <RouteDetail legs={legs} />}
