@@ -1,16 +1,19 @@
 .journey-page {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1.25rem;
   padding: 1.25rem 0 2rem;
 }
 
 .journey-header {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 1rem;
-  text-align: left;
+  text-align: center;
+  width: 100%;
 }
 
 .journey-eyebrow,
@@ -30,6 +33,7 @@
 
 .journey-subtitle {
   margin-top: 0.35rem;
+  margin-inline: auto;
   color: var(--text-secondary);
   max-width: 60ch;
 }
@@ -55,6 +59,8 @@
   grid-template-columns: 1.1fr 0.9fr;
   gap: 1rem;
   align-items: start;
+  width: 100%;
+  max-width: 980px;
 }
 
 .journey-panel {
@@ -63,12 +69,13 @@
   border-radius: var(--border-radius);
   box-shadow: var(--shadow);
   padding: 1.1rem;
-  text-align: left;
+  text-align: center;
 }
 
 .journey-map-shell {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 0.9rem;
 }
 
@@ -87,16 +94,18 @@
 }
 
 .journey-map {
-  width: 100%;
+  width: min(100%, 560px);
   height: 420px;
   border-radius: 1rem;
   overflow: hidden;
   border: 1px solid var(--border-color);
+  margin-inline: auto;
 }
 
 .map-legend {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 0.9rem 1rem;
   color: var(--text-secondary);
   font-size: 0.92rem;
