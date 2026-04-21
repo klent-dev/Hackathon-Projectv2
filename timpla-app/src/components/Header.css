@@ -1,9 +1,14 @@
 .app-header {
-  text-align: center;
+  position: relative;
+  text-align: left;
   padding: 2rem 1rem 1rem;
+  min-height: 120px; /* reserve space so next section won't overlap */
 }
 
 .app-title {
+  position: absolute;
+  top: 0.5rem;
+  left: 1rem;
   margin: 0;
   font-size: 2.5rem;
   font-weight: 900;
@@ -11,7 +16,10 @@
 }
 
 .app-tagline {
-  margin: 0.25rem 0 0;
+  position: absolute;
+  top: calc(0.5rem + 52px); /* put it right under title */
+  left: 1rem;
+  margin: 0;
   font-size: 1rem;
   color: var(--text-secondary);
 }
