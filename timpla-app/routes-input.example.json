@@ -1,0 +1,11 @@
+{
+  "nodes": [
+    { "id": "carbon", "name": "Carbon Market" },
+    { "id": "colon", "name": "Colon Street" },
+    { "id": "parkmall", "name": "Parkmall" }
+  ],
+  "edges": [
+    { "from": "carbon", "to": "colon", "mode": "walk", "fare": 0, "time": 8 },
+    { "from": "colon", "to": "parkmall", "mode": "jeepney", "line": "01K", "fare": 15, "time": 35 }
+  ]
+}

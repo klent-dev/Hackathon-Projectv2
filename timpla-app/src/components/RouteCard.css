@@ -1,0 +1,73 @@
+.route-card {
+  background: var(--bg-panel);
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.route-card:hover {
+  border-color: var(--accent-color);
+  transform: translateY(-4px);
+}
+
+.route-card.cheapest {
+  border-color: var(--accent-green);
+  box-shadow: 0 0 15px rgba(35, 134, 54, 0.5);
+}
+
+.card-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.card-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.mode-sequence {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.time-estimate {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.card-right {
+  text-align: right;
+}
+
+.total-fare {
+  font-size: 2.75rem;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--text-primary);
+}
+
+.total-fare span {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-right: 0.25rem;
+}
+
+.cheapest-badge {
+  margin-top: 0.5rem;
+  display: inline-block;
+  background-color: var(--accent-green);
+  color: #fff;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
