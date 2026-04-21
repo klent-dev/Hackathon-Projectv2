@@ -357,6 +357,10 @@
     grid-template-columns: 1fr;
   }
 
+  .journey-header {
+    padding-left: 0.5rem;
+  }
+
   .journey-map {
     height: 340px;
   }
