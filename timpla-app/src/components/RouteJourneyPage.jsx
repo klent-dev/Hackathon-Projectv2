@@ -50,7 +50,8 @@ function buildBoardingStops(route) {
     .filter((leg) => leg.mode !== "walk")
     .map((leg, index) => ({
       id: `${leg.from}-${leg.to}-${index}`,
-      line: leg.line || leg.mode,
+      line: formatLine(leg.line),
+      displayLine: formatLine(leg.line) || leg.mode,
       nodeId: leg.from,
       stopName: getStopName(leg.from),
       destinationName: getStopName(leg.to),
@@ -58,6 +59,11 @@ function buildBoardingStops(route) {
       fare: leg.fare,
       time: leg.time,
     }));
+}
+
+function formatLine(line) {
+  if (!line) return "";
+  return Array.isArray(line) ? line.join(" / ") : line;
 }
 
 function FitBounds({ positions }) {
@@ -137,6 +143,14 @@ function RouteJourneyPage({ route, onBackToResults }) {
     ...stop,
     id: `${stop.nodeId}-${index}`,
     label: getStopName(stop.nodeId),
+    lines: Array.from(
+      new Set(
+        boardingStops
+          .filter((boarding) => boarding.nodeId === stop.nodeId)
+          .map((boarding) => boarding.line)
+          .filter(Boolean)
+      )
+    ),
     note:
       stop.role === "start"
         ? "Starting point"
@@ -238,6 +252,12 @@ function RouteJourneyPage({ route, onBackToResults }) {
                   >
                     <Popup>
                       <strong>{stop.label}</strong>
+                      {stop.lines.length > 0 && (
+                        <>
+                          <br />
+                          <small>Jeep codes: {stop.lines.join(", ")}</small>
+                        </>
+                      )}
                       <br />
                       {isStart
                         ? "Start here"
@@ -296,7 +316,7 @@ function RouteJourneyPage({ route, onBackToResults }) {
                   <div className="boarding-stop-badge">{index + 1}</div>
                   <div className="boarding-stop-copy">
                     <div className="boarding-stop-title">
-                      {stop.line} at {stop.stopName}
+                      {stop.displayLine} at {stop.stopName}
                     </div>
                     <div className="boarding-stop-body">
                       Board here and ride to {stop.destinationName}.
@@ -316,7 +336,7 @@ function RouteJourneyPage({ route, onBackToResults }) {
                   <div className="journey-leg-title">
                     {leg.mode === "walk"
                       ? `Walk from ${getStopName(leg.from)} to ${getStopName(leg.to)}`
-                      : `Board ${leg.line || leg.mode} at ${getStopName(leg.from)}`}
+                      : `Board ${formatLine(leg.line) || leg.mode} at ${getStopName(leg.from)}`}
                   </div>
                   <div className="journey-leg-body">
                     {leg.mode === "walk"

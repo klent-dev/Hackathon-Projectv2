@@ -5,8 +5,8 @@ function Header() {
   return (
     <header className="app-header">
       <h1 className="app-title">
-        Timpla{" "}
-        <span role="img" aria-label="bowl">
+        Timpla
+        <span className="app-logo" role="img" aria-label="bowl">
           🥣
         </span>
       </h1>

@@ -11,6 +11,11 @@ const ICONS = {
   "habal-habal": "🛵",
 };
 
+function formatLine(line) {
+  if (!line) return "";
+  return Array.isArray(line) ? line.join(" / ") : line;
+}
+
 function RouteDetail({ legs }) {
   return (
     <div className="route-detail">
@@ -21,7 +26,7 @@ function RouteDetail({ legs }) {
             <div className="leg-instruction">
               <strong>
                 {leg.mode.replace("_", " ")}
-                {leg.line ? ` (${leg.line})` : ""}
+                {leg.line ? ` (${formatLine(leg.line)})` : ""}
               </strong>{" "}
               from{" "}
               <strong>{NODES[leg.from]?.name || leg.from}</strong> to{" "}
