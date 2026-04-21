@@ -47,6 +47,12 @@
   font-weight: 600;
 }
 
+.route-metrics {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
 .card-right {
   text-align: right;
 }

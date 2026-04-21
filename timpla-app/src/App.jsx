@@ -26,6 +26,9 @@ function App() {
   const [calculationDone, setCalculationDone] = useState(Boolean(storedState?.calculationDone));
   const [selectedRouteId, setSelectedRouteId] = useState(storedState?.selectedRouteId || null);
   const [activeView, setActiveView] = useState(storedState?.activeView || 'search');
+  const [routePreferences, setRoutePreferences] = useState(
+    storedState?.routePreferences || { priority: 'cheapest', avoidWalking: false }
+  );
 
   useEffect(() => {
     try {
@@ -35,6 +38,7 @@ function App() {
         calculationDone,
         selectedRouteId,
         activeView,
+        routePreferences,
       };
 
       if (calculationDone || activeView !== 'search') {
@@ -45,10 +49,14 @@ function App() {
     } catch {
       // Ignore storage failures.
     }
-  }, [routeOptions, savingsInfo, calculationDone, selectedRouteId, activeView]);
+  }, [routeOptions, savingsInfo, calculationDone, selectedRouteId, activeView, routePreferences]);
 
-  const handleCalculate = (from, to) => {
+  const handleCalculate = (from, to, preferences) => {
     if (!from || !to) return;
+
+    if (preferences) {
+      setRoutePreferences(preferences);
+    }
 
     setIsLoading(true);
     setRouteOptions([]);
@@ -60,7 +68,7 @@ function App() {
     // Simulate network delay
     setTimeout(() => {
       try {
-        const routes = findRoutes(from, to);
+        const routes = findRoutes(from, to, preferences || routePreferences);
         const savings = calculateSavings(routes);
         setRouteOptions(routes);
         setSavingsInfo(savings);
@@ -86,6 +94,11 @@ function App() {
   };
 
   const selectedRoute = routeOptions.find((route) => route.id === selectedRouteId) || null;
+  const cheapestRouteId =
+    routeOptions.reduce((bestRoute, route) => {
+      if (!bestRoute) return route;
+      return route.totalFare < bestRoute.totalFare ? route : bestRoute;
+    }, null)?.id || null;
 
   if (activeView === 'journey' && selectedRoute) {
     return (
@@ -102,7 +115,11 @@ function App() {
     <div className="app-container">
       <Header />
       <main>
-        <LocationPicker onCalculate={handleCalculate} />
+        <LocationPicker
+          onCalculate={handleCalculate}
+          preferences={routePreferences}
+          onPreferencesChange={setRoutePreferences}
+        />
 
         {isLoading && <div className="loader">Calculating your best route...</div>}
 
@@ -112,7 +129,12 @@ function App() {
             {selectedRoute && (
               <div className="selected-route-banner">
                 <p>
-                  Selected route: ₱{selectedRoute.totalFare} • ~{selectedRoute.totalTime} min
+                  Selected route: ₱
+                  {typeof selectedRoute.totalFareMin === 'number' && typeof selectedRoute.totalFareMax === 'number'
+                    ? selectedRoute.totalFareMin === selectedRoute.totalFareMax
+                      ? selectedRoute.totalFareMin
+                      : `${selectedRoute.totalFareMin}-${selectedRoute.totalFareMax}`
+                    : selectedRoute.totalFare} • ~{selectedRoute.totalTime} min
                 </p>
               </div>
             )}
@@ -121,7 +143,7 @@ function App() {
                 <RouteCard
                   key={route.id}
                   route={route}
-                  isCheapest={index === 0}
+                  isCheapest={route.id === cheapestRouteId}
                   isSelected={route.id === selectedRouteId}
                   onTakeRoute={handleTakeRoute}
                 />

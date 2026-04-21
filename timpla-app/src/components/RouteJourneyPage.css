@@ -95,6 +95,35 @@
   margin-inline: auto;
 }
 
+.map-controls-overlay {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.map-control-btn {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-color);
+  border-radius: 2rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+.map-control-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--btn-border);
+}
+.map-control-btn.active {
+  background: var(--accent-light);
+  color: var(--accent-text);
+  border-color: var(--accent-border);
+}
+
 .map-legend {
   display: flex;
   flex-wrap: wrap;
@@ -165,6 +194,25 @@
 
 .route-stop-marker-end {
   background: #2563eb;
+}
+
+.route-stop-marker-user-location {
+  background: #4285F4;
+  border: 3px solid #fff;
+  animation: pulse-ring 2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+  border-radius: 50%;
+}
+
+.route-stop-marker-all-stop {
+  background: var(--bg-hover);
+  border: 2px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(66, 133, 244, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(66, 133, 244, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(66, 133, 244, 0); }
 }
 
 .boarding-stops {
@@ -284,7 +332,7 @@
 
 .journey-summary {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0.75rem;
   margin-bottom: 1rem;
 }
@@ -314,6 +362,30 @@
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
+}
+
+.journey-explain {
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.journey-explain-body {
+  border: 1px solid var(--border-color);
+  background: var(--bg-input);
+  border-radius: 1rem;
+  padding: 0.9rem;
+}
+
+.journey-explain-summary {
+  color: var(--text-primary);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.journey-explain-meta {
+  margin-top: 0.35rem;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
 }
 
 .journey-leg-card {

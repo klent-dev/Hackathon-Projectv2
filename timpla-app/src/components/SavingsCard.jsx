@@ -10,7 +10,10 @@ function SavingsCard({ info }) {
 
   const expensiveMode =
     (expensive.legs ? expensive.legs[0].mode : expensive.mode) || "single ride";
-  const expensiveFare = expensive.fare || expensive.totalFare;
+  const expensiveFare =
+    typeof expensive.totalFareMin === "number" ? expensive.totalFareMin : expensive.fare || expensive.totalFare;
+  const cheapestFare =
+    typeof cheapest.totalFareMin === "number" ? cheapest.totalFareMin : cheapest.totalFare;
 
   return (
     <div className="savings-card">
@@ -31,7 +34,7 @@ function SavingsCard({ info }) {
           <div className="vs">vs</div>
           <div className="option timpla">
             <span className="mode-label">Timpla</span>
-            <span className="fare">₱{cheapest.totalFare}</span>
+            <span className="fare">₱{cheapestFare}</span>
           </div>
         </div>
       </div>

@@ -5,10 +5,21 @@ export const NODE_COORDINATES = {
   colon: [10.2973, 123.8986],
   fuente: [10.3079, 123.8918],
   carbon: [10.292, 123.9003],
+  // Guadalupe / Banawa area (06/07)
+  guadalupe: [10.3228797, 123.8839389],
+  banawa: [10.3180226, 123.8780487],
+  v_rama: [10.3216771, 123.8841264],
+  c_padilla: [10.2935343, 123.8889589],
   sm_seaside: [10.2775, 123.881],
   as_fortuna: [10.3355, 123.9278],
   parkmall: [10.3325, 123.927],
   mactan_airport: [10.3071, 123.979],
+  // Mandaue area (20/21/22)
+  pier_area: [10.3054355, 123.9174564],
+  mandaue_odd: [10.3274247, 123.943322],
+  mandaue_even: [10.3274183, 123.9421517],
+  cm_cabahug: [10.3190917, 123.9480445],
+  new_public_market: [10.3276687, 123.9414342],
   talamban: [10.3769, 123.9135],
   banilad: [10.3422, 123.9094],
   capitol: [10.3106, 123.8947],
@@ -36,6 +47,19 @@ export const NODE_COORDINATES = {
   panganiban: [10.2954221, 123.8933723],
   ramos: [10.3049369, 123.8983895],
   osmena: [10.3062177, 123.8944934],
+  // Modern jeep / additional stops
+  tabunok: [10.2635799, 123.8398179],
+  tisa: [10.3020584, 123.8689577],
+  city_hospital: [10.2974153, 123.8916199],
+  lapulapu_public_market: [10.311088, 123.9505139],
+  // Mactan Island (23/MI)
+  mepz1: [10.3256323, 123.9835938],
+  mepz2: [10.3033716, 123.9652521],
+  punta_engano: [10.3103615, 124.0191396],
+  lapulapu_city_proper: [10.3164608, 123.9652281],
+  maribago: [10.2850724, 123.9929719],
+  marigondon: [10.2744239, 123.9760833],
+  cordova: [10.252199, 123.9494748],
 };
 
 export const DEFAULT_MAP_CENTER = [10.315, 123.905];
