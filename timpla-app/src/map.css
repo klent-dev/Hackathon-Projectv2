@@ -1,0 +1,38 @@
+/* ===== MAP CONTAINER ===== */
+.map-container {
+  height: 250px;
+  width: 100%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 20px;
+  border: 1px solid var(--border-subtle);
+  position: relative;
+  z-index: 1;
+}
+
+.map-wrapper {
+  height: 100%;
+  width: 100%;
+}
+
+.leaflet-container {
+  background: #111 !important;
+  font-family: var(--font) !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background: rgba(25, 25, 35, 0.9) !important;
+  color: #fff !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px !important;
+}
+
+.leaflet-popup-tip {
+  background: rgba(25, 25, 35, 0.9) !important;
+}
+
+/* Hide zoom controls as requested */
+.leaflet-control-zoom {
+  display: none !important;
+}

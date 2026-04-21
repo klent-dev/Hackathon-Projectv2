@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useEffect, useState } from 'react';
 import Header from './components/Header';
 import HomePage from './components/HomePage';
@@ -8,23 +9,23 @@ import RouteJourneyPage from './components/RouteJourneyPage';
 import DriverDashboard from './components/DriverDashboard';
 import { calculateSavings, findRoutes } from './engine/routeFinder';
 import './App.css';
+=======
+import React, { useState } from 'react';
+import Header from './components/Header.jsx';
+import LocationPicker from './components/LocationPicker.jsx';
+import RouteCard from './components/RouteCard.jsx';
+import SavingsCard from './components/SavingsCard.jsx';
+import { findRoutes, getExpensiveBaseline } from './engine/routeFinder.js';
+import { getLocationName } from './data/routes.js';
+>>>>>>> 1b94f886d86d9a06d6fbd51ea3d07bfd69cff4cb
 
-const APP_STATE_KEY = 'timpla-app-route-state';
-
-function readStoredAppState() {
-  try {
-    const stored = sessionStorage.getItem(APP_STATE_KEY);
-    return stored ? JSON.parse(stored) : null;
-  } catch {
-    return null;
-  }
-}
-
-function App() {
-  const storedState = readStoredAppState();
-  const [routeOptions, setRouteOptions] = useState(storedState?.routeOptions || []);
-  const [savingsInfo, setSavingsInfo] = useState(storedState?.savingsInfo || null);
+export default function App() {
+  const [origin, setOrigin] = useState('');
+  const [destination, setDestination] = useState('');
+  const [routes, setRoutes] = useState([]);
+  const [baseline, setBaseline] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+<<<<<<< HEAD
   const [calculationDone, setCalculationDone] = useState(Boolean(storedState?.calculationDone));
   const [selectedRouteId, setSelectedRouteId] = useState(storedState?.selectedRouteId || null);
   const [activeView, setActiveView] = useState(storedState?.activeView || 'search');
@@ -75,28 +76,32 @@ function App() {
     if (preferences) {
       setRoutePreferences(preferences);
     }
+=======
+  const [hasSearched, setHasSearched] = useState(false);
+>>>>>>> 1b94f886d86d9a06d6fbd51ea3d07bfd69cff4cb
 
+  const handleCalculate = () => {
     setIsLoading(true);
-    setRouteOptions([]);
-    setSavingsInfo(null);
-    setCalculationDone(false);
-    setSelectedRouteId(null);
-    setActiveView('results');
+    setHasSearched(false);
 
-    // Simulate network delay
+    // Small delay to show loading state and trigger animations
     setTimeout(() => {
-      try {
-        const routes = findRoutes(from, to, preferences || routePreferences);
-        const savings = calculateSavings(routes);
-        setRouteOptions(routes);
-        setSavingsInfo(savings);
-      } finally {
-        setIsLoading(false);
-        setCalculationDone(true);
-      }
-    }, 1200);
+      const results = findRoutes(origin, destination, 4);
+      const expensiveBaseline = getExpensiveBaseline(origin, destination);
+      setRoutes(results);
+      setBaseline(expensiveBaseline);
+      setIsLoading(false);
+      setHasSearched(true);
+
+      // Scroll to results
+      setTimeout(() => {
+        const el = document.getElementById('results-section');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }, 600);
   };
 
+<<<<<<< HEAD
   const [expandedRouteId, setExpandedRouteId] = useState(null);
 
   const handleTakeRoute = (routeId) => {
@@ -170,15 +175,49 @@ function App() {
     <div className="app-container">
       <Header onHomeClick={handleBackToRolePicker} />
       <main>
+=======
+  return (
+    <div className="app">
+      {/* Animated Background */}
+      <div className="bg-blobs">
+        <div className="blob blob-1"></div>
+        <div className="blob blob-2"></div>
+        <div className="blob blob-3"></div>
+      </div>
+      <Header />
+
+      <main className="main-content">
+>>>>>>> 1b94f886d86d9a06d6fbd51ea3d07bfd69cff4cb
         <LocationPicker
+          origin={origin}
+          destination={destination}
+          onOriginChange={setOrigin}
+          onDestChange={setDestination}
           onCalculate={handleCalculate}
+<<<<<<< HEAD
           onNodesChange={handleNodesChange}
           preferences={routePreferences}
           onPreferencesChange={setRoutePreferences}
+=======
+          isLoading={isLoading}
+>>>>>>> 1b94f886d86d9a06d6fbd51ea3d07bfd69cff4cb
         />
 
-        {isLoading && <div className="loader">Calculating your best route...</div>}
+        {hasSearched && (
+          <section className="results-section" id="results-section">
+            {routes.length > 0 ? (
+              <>
+                <div className="results-header">
+                  <h2 className="results-title">
+                    <span className="results-emoji">🗺️</span>
+                    Routes: {getLocationName(origin)} → {getLocationName(destination)}
+                  </h2>
+                  <p className="results-subtitle">
+                    Found {routes.length} mixed routes. Tap a card for step-by-step directions.
+                  </p>
+                </div>
 
+<<<<<<< HEAD
         {!isLoading && calculationDone && (
           <div className="results">
             {savingsInfo && <SavingsCard info={savingsInfo} />}
@@ -206,22 +245,82 @@ function App() {
                   onTakeRoute={handleTakeRoute}
                 />
               ))
+=======
+                <div className="route-cards-list">
+                  {routes.map((route, i) => (
+                    <RouteCard
+                      key={i}
+                      route={route}
+                      index={i}
+                      isCheapest={i === 0}
+                    />
+                  ))}
+                </div>
+
+                {baseline && routes.length > 0 && (
+                  <SavingsCard
+                    cheapestFare={routes[0].totalFare}
+                    baselineFare={baseline.fare}
+                    baselineLabel={baseline.label}
+                  />
+                )}
+              </>
+>>>>>>> 1b94f886d86d9a06d6fbd51ea3d07bfd69cff4cb
             ) : (
-              <div className="results-placeholder">
-                <p>No routes found. Try another combination.</p>
+              <div className="no-results">
+                <span className="no-results-emoji">😕</span>
+                <h3>No routes found</h3>
+                <p>Try a different origin or destination.</p>
               </div>
             )}
-          </div>
+          </section>
         )}
 
-        {!isLoading && !calculationDone && (
-           <div className="results-placeholder">
-                <p>Select your origin and destination to see the magic!</p>
+        {!hasSearched && !isLoading && (
+          <section className="hero-section">
+            <div className="hero-card">
+              <h2 className="hero-title">Stop overpaying for your commute! 🚐</h2>
+              <p className="hero-text">
+                Most Cebu commuters default to one expensive ride. Timpla finds cheaper
+                <strong> mixed routes</strong> combining jeepneys, walks, and buses — saving you
+                <strong> ₱50-200 per trip</strong>.
+              </p>
+              <div className="hero-example">
+                <div className="example-bad">
+                  <span className="example-label">❌ Usual way</span>
+                  <span className="example-route">Grab from IT Park → Mactan</span>
+                  <span className="example-fare bad-fare">₱350</span>
+                </div>
+                <div className="example-arrow">→</div>
+                <div className="example-good">
+                  <span className="example-label">✅ Timpla way</span>
+                  <span className="example-route">Jeep + Jeep + Jeep</span>
+                  <span className="example-fare good-fare">₱46</span>
+                </div>
+              </div>
+              <div className="hero-stats">
+                <div className="hero-stat">
+                  <span className="stat-number">17</span>
+                  <span className="stat-label">Cebu Locations</span>
+                </div>
+                <div className="hero-stat">
+                  <span className="stat-number">8</span>
+                  <span className="stat-label">Transport Modes</span>
+                </div>
+                <div className="hero-stat">
+                  <span className="stat-number">₱0</span>
+                  <span className="stat-label">App Cost</span>
+                </div>
+              </div>
             </div>
+          </section>
         )}
       </main>
+
+      <footer className="footer">
+        <p>Built with 💚 for SUGBO-SAVE 2026 Hackathon · USJR</p>
+        <p className="footer-sub">Diskarte — Using EXISTING resources, not new infrastructure.</p>
+      </footer>
     </div>
   );
 }
-
-export default App;
