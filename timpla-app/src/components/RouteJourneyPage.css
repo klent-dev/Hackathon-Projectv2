@@ -31,13 +31,6 @@
   margin: 0;
 }
 
-.journey-subtitle {
-  margin-top: 0.35rem;
-  margin-inline: auto;
-  color: var(--text-secondary);
-  max-width: 60ch;
-}
-
 .journey-back-btn {
   border: 1px solid var(--border-color);
   background: var(--bg-panel);

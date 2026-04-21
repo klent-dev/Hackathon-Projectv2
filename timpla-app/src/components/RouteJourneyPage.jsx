@@ -205,9 +205,6 @@ function RouteJourneyPage({ route, onBackToResults }) {
         <div>
           <p className="journey-eyebrow">Route map</p>
           <h2>{startName} to {endName}</h2>
-          <p className="journey-subtitle">
-            Follow the schematic map, board at the highlighted stops, and transfer when needed.
-          </p>
         </div>
         <div className="journey-actions">
           <button type="button" className="journey-back-btn" onClick={onBackToResults}>
