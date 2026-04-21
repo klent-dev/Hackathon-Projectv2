@@ -13,9 +13,7 @@ const ICONS = {
   "habal-habal": "🛵",
 };
 
-function RouteCard({ route, isCheapest, isSelected, onTakeRoute }) {
-  const [isExpanded, setIsExpanded] = useState(false);
-
+function RouteCard({ route, isCheapest, isSelected, isExpanded, onToggleExpand, onTakeRoute }) {
   const { legs, totalFareMin, totalFareMax, totalFare, totalTime, etaMin, etaMax, transfers, walkTime } = route;
 
   const timeLabel =
@@ -67,7 +65,7 @@ function RouteCard({ route, isCheapest, isSelected, onTakeRoute }) {
       } ${
         isExpanded ? "expanded" : ""
       }`}
-      onClick={() => setIsExpanded(!isExpanded)}
+      onClick={() => onToggleExpand?.(route.id)}
     >
       <div className="card-main">
         <div className="card-left">

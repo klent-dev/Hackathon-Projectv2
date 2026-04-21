@@ -1,0 +1,157 @@
+.driver-dashboard {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  width: 100%;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.driver-header {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.driver-header h2 {
+  font-size: 1.8rem;
+  color: var(--text-color);
+  margin-bottom: 0.2rem;
+}
+
+.driver-header .subtitle {
+  color: var(--secondary-text);
+  font-size: 1rem;
+}
+
+.content-grid.two-cols {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .content-grid.two-cols {
+    grid-template-columns: 1fr;
+  }
+}
+
+.glass-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.map-container {
+  padding: 0;
+  overflow: hidden;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.driver-map {
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* Keep map below modals/headers */
+}
+
+.side-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.side-panel h3 {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+
+.route-option {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+}
+
+.route-option.optimal {
+  border-color: rgba(16, 185, 129, 0.4);
+  background-color: rgba(16, 185, 129, 0.05);
+}
+
+.route-option.congested {
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.route-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.route-header h4 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+.badge.green {
+  background-color: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+}
+
+.badge.red {
+  background-color: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.route-stats {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.savings-text {
+  color: #10b981;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.warning-text {
+  color: #ef4444;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.info-card h4 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+
+.info-card p {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--secondary-text);
+}

@@ -144,6 +144,22 @@
   border-radius: var(--border-radius);
 }
 
+.role-switch-btn {
+  margin-top: 1rem;
+  border: 1px solid var(--accent-color);
+  background: transparent;
+  color: var(--accent-color);
+  padding: 0.55rem 0.95rem;
+  border-radius: 0.6rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.role-switch-btn:hover {
+  background: var(--accent-color);
+  color: #000;
+}
+
 
 #spacer {
   height: 88px;

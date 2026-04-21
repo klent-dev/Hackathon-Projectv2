@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import Header from './components/Header';
+import HomePage from './components/HomePage';
 import LocationPicker from './components/LocationPicker';
 import SavingsCard from './components/SavingsCard';
 import RouteCard from './components/RouteCard';
 import RouteJourneyPage from './components/RouteJourneyPage';
+import DriverDashboard from './components/DriverDashboard';
 import { calculateSavings, findRoutes } from './engine/routeFinder';
 import './App.css';
 
@@ -26,6 +28,7 @@ function App() {
   const [calculationDone, setCalculationDone] = useState(Boolean(storedState?.calculationDone));
   const [selectedRouteId, setSelectedRouteId] = useState(storedState?.selectedRouteId || null);
   const [activeView, setActiveView] = useState(storedState?.activeView || 'search');
+  const [userRole, setUserRole] = useState(storedState?.userRole || null);
   const [routePreferences, setRoutePreferences] = useState(
     storedState?.routePreferences || { priority: 'cheapest', avoidWalking: false }
   );
@@ -38,10 +41,11 @@ function App() {
         calculationDone,
         selectedRouteId,
         activeView,
+        userRole,
         routePreferences,
       };
 
-      if (calculationDone || activeView !== 'search') {
+      if (userRole || calculationDone || activeView !== 'search') {
         sessionStorage.setItem(APP_STATE_KEY, JSON.stringify(snapshot));
       } else {
         sessionStorage.removeItem(APP_STATE_KEY);
@@ -49,7 +53,21 @@ function App() {
     } catch {
       // Ignore storage failures.
     }
-  }, [routeOptions, savingsInfo, calculationDone, selectedRouteId, activeView, routePreferences]);
+  }, [routeOptions, savingsInfo, calculationDone, selectedRouteId, activeView, userRole, routePreferences]);
+
+  const handleSelectRole = (role) => {
+    setUserRole(role);
+    setActiveView('search');
+  };
+
+  const handleBackToRolePicker = () => {
+    setUserRole(null);
+    setSelectedRouteId(null);
+    setRouteOptions([]);
+    setSavingsInfo(null);
+    setCalculationDone(false);
+    setActiveView('search');
+  };
 
   const handleCalculate = (from, to, preferences) => {
     if (!from || !to) return;
@@ -79,9 +97,15 @@ function App() {
     }, 1200);
   };
 
+  const [expandedRouteId, setExpandedRouteId] = useState(null);
+
   const handleTakeRoute = (routeId) => {
     setSelectedRouteId(routeId);
     setActiveView('journey');
+  };
+
+  const handleToggleExpand = (routeId) => {
+    setExpandedRouteId((prev) => (prev === routeId ? null : routeId));
   };
 
   const handleBackToResults = () => {
@@ -93,6 +117,15 @@ function App() {
     setActiveView('results');
   };
 
+  const handleNodesChange = () => {
+    setRouteOptions([]);
+    setSavingsInfo(null);
+    setCalculationDone(false);
+    setSelectedRouteId(null);
+    setExpandedRouteId(null);
+    setActiveView('search');
+  };
+
   const selectedRoute = routeOptions.find((route) => route.id === selectedRouteId) || null;
   const cheapestRouteId =
     routeOptions.reduce((bestRoute, route) => {
@@ -100,10 +133,32 @@ function App() {
       return route.totalFare < bestRoute.totalFare ? route : bestRoute;
     }, null)?.id || null;
 
+  if (!userRole) {
+    return (
+      <div className="app-container">
+        <Header onHomeClick={handleBackToRolePicker} />
+        <main>
+          <HomePage onSelectRole={handleSelectRole} />
+        </main>
+      </div>
+    );
+  }
+
+  if (userRole === 'driver') {
+    return (
+      <div className="app-container">
+        <Header onHomeClick={handleBackToRolePicker} />
+        <main style={{ maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
+          <DriverDashboard />
+        </main>
+      </div>
+    );
+  }
+
   if (activeView === 'journey' && selectedRoute) {
     return (
       <div className="app-container">
-        <Header />
+        <Header onHomeClick={handleBackToRolePicker} />
         <main>
           <RouteJourneyPage route={selectedRoute} onBackToResults={handleResetJourney} />
         </main>
@@ -113,10 +168,11 @@ function App() {
 
   return (
     <div className="app-container">
-      <Header />
+      <Header onHomeClick={handleBackToRolePicker} />
       <main>
         <LocationPicker
           onCalculate={handleCalculate}
+          onNodesChange={handleNodesChange}
           preferences={routePreferences}
           onPreferencesChange={setRoutePreferences}
         />
@@ -145,6 +201,8 @@ function App() {
                   route={route}
                   isCheapest={route.id === cheapestRouteId}
                   isSelected={route.id === selectedRouteId}
+                  isExpanded={expandedRouteId === route.id}
+                  onToggleExpand={handleToggleExpand}
                   onTakeRoute={handleTakeRoute}
                 />
               ))

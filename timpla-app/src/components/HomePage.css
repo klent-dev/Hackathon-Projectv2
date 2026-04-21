@@ -1,0 +1,67 @@
+.home {
+  min-height: 70vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem 1rem;
+}
+
+.home-card {
+  width: min(720px, 100%);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background: var(--bg-panel);
+  box-shadow: var(--shadow);
+  padding: 2rem 1.5rem;
+}
+
+.home-kicker {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent-color);
+  font-weight: 800;
+}
+
+.home-title {
+  margin: 0.4rem 0 0;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+}
+
+.home-subtitle {
+  margin: 0.85rem auto 0;
+  color: var(--text-secondary);
+  max-width: 56ch;
+}
+
+.home-actions {
+  margin-top: 1.3rem;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.home-start {
+  border: 1px solid var(--accent-color);
+  border-radius: 0.7rem;
+  background: transparent;
+  color: var(--accent-color);
+  font-weight: 800;
+  padding: 0.75rem 1.2rem;
+  cursor: pointer;
+}
+
+.home-start:hover {
+  background: var(--accent-color);
+  color: #000;
+}
+
+.home-driver {
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+.home-driver:hover {
+  background: var(--text-primary);
+  color: #000;
+}

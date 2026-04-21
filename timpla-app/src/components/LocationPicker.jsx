@@ -2,9 +2,19 @@ import React, { useState } from "react";
 import { NODES } from "../data/routes";
 import "./LocationPicker.css";
 
-function LocationPicker({ onCalculate, preferences, onPreferencesChange }) {
+function LocationPicker({ onCalculate, onNodesChange, preferences, onPreferencesChange }) {
   const [startNode, setStartNode] = useState("");
   const [endNode, setEndNode] = useState("");
+
+  const handleStartNodeChange = (e) => {
+    setStartNode(e.target.value);
+    onNodesChange?.();
+  };
+
+  const handleEndNodeChange = (e) => {
+    setEndNode(e.target.value);
+    onNodesChange?.();
+  };
 
   const resolvedPreferences = preferences || { priority: "cheapest", avoidWalking: false };
 
@@ -30,7 +40,7 @@ function LocationPicker({ onCalculate, preferences, onPreferencesChange }) {
           <select
             id="start-node"
             value={startNode}
-            onChange={(e) => setStartNode(e.target.value)}
+            onChange={handleStartNodeChange}
           >
             <option value="" disabled>
               Select starting point...
@@ -43,7 +53,7 @@ function LocationPicker({ onCalculate, preferences, onPreferencesChange }) {
           <select
             id="end-node"
             value={endNode}
-            onChange={(e) => setEndNode(e.target.value)}
+            onChange={handleEndNodeChange}
           >
             <option value="" disabled>
               Select destination...
@@ -53,7 +63,7 @@ function LocationPicker({ onCalculate, preferences, onPreferencesChange }) {
         </div>
       </div>
 
-      <div className="picker-toggles">
+      <div className="picker-toggles" style={{ display: preferences?.driverMode ? 'none' : 'block' }}>
         <label className="toggle">
           <input
             type="checkbox"

@@ -1,9 +1,9 @@
 import React from "react";
 import "./Header.css";
 
-function Header() {
+function Header({ onHomeClick }) {
   return (
-    <header className="app-header">
+    <header className="app-header" onClick={onHomeClick} style={{ cursor: onHomeClick ? 'pointer' : 'default' }}>
       <h1 className="app-title">
         Timpla
         <span className="app-logo" role="img" aria-label="bowl">
